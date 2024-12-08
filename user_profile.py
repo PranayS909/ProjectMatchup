@@ -33,6 +33,7 @@ def save_and_display_profile():
     
     status_label.configure(text="Profile saved and displayed!", text_color="green")
 
+
 # Function to load profile data from JSON
 def load_profile_data():
     if os.path.exists(DATA_FILE):
@@ -50,6 +51,27 @@ def load_profile_data():
         status_label.configure(text="Profile loaded successfully!", text_color="blue")
     else:
         status_label.configure(text="No previous profile found. Enter new data.", text_color="red")
+
+
+# Function to clear all fields and delete the stored JSON data
+def clear_all_data():
+    # Clear all fields
+    name_entry.delete(0, "end")
+    year_entry.delete(0, "end")
+    branch_entry.delete(0, "end")
+    skill1_entry.delete(0, "end")
+    skill2_entry.delete(0, "end")
+    skill3_entry.delete(0, "end")
+    description_box.delete("1.0", "end")
+    achievements_box.delete("1.0", "end")
+    
+    # Clear JSON file if exists
+    if os.path.exists(DATA_FILE):
+        os.remove(DATA_FILE)
+
+    # Reset the status and UI
+    status_label.configure(text="Data cleared successfully!", text_color="red")
+
 
 # Initialize the main window
 app = ctk.CTk()
@@ -116,9 +138,13 @@ achievements_label.place(x=30, y=470)
 achievements_box = ctk.CTkTextbox(app, width=500, height=100, fg_color="gray")
 achievements_box.place(x=30, y=500)
 
-# Enter button to save and display
+# Enter button to save data
 enter_button = ctk.CTkButton(app, text="Enter", command=save_and_display_profile, width=200, height=50)
-enter_button.place(x=350, y=645)
+enter_button.place(x=300, y=645)
+
+# Clear button to clear all data
+clear_button = ctk.CTkButton(app, text="Clear", command=clear_all_data, width=200, height=50, fg_color="red")
+clear_button.place(x=92, y=645)
 
 # Status label for feedback
 status_label = ctk.CTkLabel(app, text="", font=("Arial", 12))
